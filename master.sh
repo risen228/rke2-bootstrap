@@ -7,7 +7,8 @@ read -p "Enter nodes IP addresses separated by comma: " IP_STRING
 export IP_STRING
 
 function read_ip_array() {
-  readarray -td, IP_ARRAY <<<"$IP_STRING,"; unset 'a[-1]'; declare -p a;
+  readarray -td, IP_ARRAY <<<"$IP_STRING,";
+  unset 'IP_ARRAY[-1]';
   declare -p IP_ARRAY;
 }
 
