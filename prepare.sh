@@ -35,6 +35,8 @@ read_ip_array
 
 # white nginx.conf beginning
 tee -a /etc/nginx/nginx.conf << END
+load_module /usr/lib/nginx/modules/ngx_stream_module.so;
+
 worker_processes 4;
 worker_rlimit_nofile 40000;
 
@@ -88,6 +90,7 @@ END
 
 # reload nginx
 nginx -s reload
+systemctl restart nginx.service
 
 ##########
 ## misc ##
