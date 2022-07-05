@@ -36,3 +36,11 @@ The command will ask you to specify the following:
 - Hostname - choose the new hostname or remain default by pressing Enter
 
 Wait for command to be finished.
+
+### Connect from your terminal
+
+1. Install `kubectl`
+2. Copy kubeconfig from master's `/etc/rancher/rke2/rke2.yaml`
+3. Paste it inside `~/.kube/config`
+4. Replace `127.0.0.1` with your load balancer domain / IP
+5. Now you can access the cluster using `kubectl`
