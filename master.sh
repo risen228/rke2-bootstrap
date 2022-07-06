@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRENT_HOSTNAME=$(hostname)
-read -p "Enter hostname [$CURRENT_HOSTNAME]: " HOSTNAME
+read -p "Enter unique hostname [$CURRENT_HOSTNAME]: " HOSTNAME
 export HOSTNAME=${HOSTNAME:-$CURRENT_HOSTNAME}
 
 read -p "Enter load balancer hostname (domain): " LOAD_BALANCER_HOSTNAME

@@ -10,14 +10,7 @@ Execute command under the `root` user:
 source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/balancer.sh)
 ```
 
-The command will ask you to specify the following:
-
-- Hostname - choose the load balancer domain or remain default by pressing Enter
-
-- All `server` nodes IPs divided by comma (including master)  
-  For example: `1.1.1.1,2.2.2.2,3.3.3.3`
-
-Wait for command to be finished.
+Answer the questions and wait for command to be finished.
 
 Later, when you add new `server` node, navigate to `/etc/nginx/nginx.conf` and add a new `server ...` line in all sections.
 
@@ -29,11 +22,7 @@ Execute command under the `root` user:
 source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/master.sh)
 ```
 
-The command will ask you to specify the following:
-
-- Hostname - choose the new hostname or remain default by pressing Enter
-
-Wait for command to be finished.
+Answer the questions and wait for command to be finished.
 
 ### Accessing `server` nodes through the load balancer
 
@@ -49,6 +38,18 @@ You need to set `tls-san` option in your rke2 config.
    ```
 
 3. Restart rke2-server - `systemctl restart rke2-server`
+
+## Set up agent node
+
+Execute command under the `root` user:
+
+```sh
+source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/agent.sh)
+```
+
+Answer the questions. The master token can be taken from master node's `/var/lib/rancher/rke2/server/node-token` file.
+
+Wait for command to be finished.
 
 ## Connect from your terminal
 
