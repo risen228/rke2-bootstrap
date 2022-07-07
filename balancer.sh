@@ -30,63 +30,52 @@ add-apt-repository -y ppa:nginx/development
 apt-get update
 apt-get install -y nginx=1.15.*
 
-function write_upstream {
-  tee -a /etc/nginx/nginx.conf << END
-    upstream $1 {
-        least_conn;
-
-        # to add the new server, use the following format:
-        # server <ip>:$2 max_fails=3 fail_timeout=5s;
-END
-
-  for ip in "${IP_ARRAY[@]}"
-  do
-    tee -a /etc/nginx/nginx.conf << END
-        server $ip:$2 max_fails=3 fail_timeout=5s;
-END
-  done
-
-  tee -a /etc/nginx/nginx.conf << END
-    }
-
-    server {
-        listen $2;
-        proxy_pass $1;
-    }
-END
-}
-
-function whiteline {
-  echo "" >> /etc/nginx/nginx.conf
+function line {
+  echo $1 >> /etc/nginx/nginx.conf
 }
 
 > /etc/nginx/nginx.conf
 
-tee -a /etc/nginx/nginx.conf << END
-user www-data;
-worker_processes auto;
-worker_rlimit_nofile 40000;
-pid /run/nginx.pid;
-include /etc/nginx/modules-enabled/*.conf;
+line "user www-data;"
+line "worker_processes auto;"
+line "worker_rlimit_nofile 40000;"
+line "pid /run/nginx.pid;"
+line "include /etc/nginx/modules-enabled/*.conf;"
+line ""
+line "events {"
+line "    worker_connections 8192;"
+line "}"
+line ""
+line "stream {"
 
-events {
-    worker_connections 8192;
+function write_upstream {
+  line "    upstream $1"
+  line "      least_conn;"
+  line ""
+  line "      # to add a new server, use the following format:"
+  line "      # server <ip>:$2 max_fails=3 fail_timeout=5s;"
+
+  for ip in "${IP_ARRAY[@]}"; do
+  line "      server $ip:$2 max_fails=3 fail_timeout=5s;"
+  done
+
+  line "    }"
+  line ""
+  line "    server {"
+  line "        listen $2;"
+  line "        proxy_pass $1;"
+  line "    }"
 }
-
-stream {
-END
 
 write_upstream "rancher_http" 80
-whiteline
+line ""
 write_upstream "rancher_https" 443
-whiteline
+line ""
 write_upstream "rancher_register" 9345
-whiteline
+line ""
 write_upstream "kubernetes_apiserver" 6443
 
-tee -a /etc/nginx/nginx.conf << END
-}
-END
+line "}"
 
 # reload nginx
 nginx -s reload

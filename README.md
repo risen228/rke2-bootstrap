@@ -67,4 +67,3 @@ Wait for command to be finished.
 3. Paste it inside `~/.kube/config`
 4. Replace `127.0.0.1` with your load balancer domain / IP
 5. Now you can access the cluster using `kubectl`
-
