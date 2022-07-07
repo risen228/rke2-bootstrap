@@ -23,6 +23,14 @@ sed -i "s/$CURRENT_HOSTNAME/$HOSTNAME/g" /etc/hosts
 
 curl -sfL https://get.rke2.io | sh -
 systemctl enable rke2-server.service
+systemctl start rke2-server.service
+
+###############################
+## add load balancer support ##
+###############################
+
+# wait 3s to ensure that rke2 started
+sleep 3
 
 # allow safe connections through load balancer
 tee -a /etc/rancher/rke2/config.yaml << END
@@ -30,7 +38,7 @@ tls-san:
   - $LOAD_BALANCER_HOSTNAME
 END
 
-systemctl start rke2-server.service
+systemctl restart rke2-server.service
 
 ########################
 ## install kubernetes ##
