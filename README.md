@@ -12,7 +12,7 @@ source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstr
 
 Answer the questions and wait for command to be finished.
 
-Later, when you add new `server` node, navigate to `/etc/nginx/nginx.conf` and add a new `server ...` line in all sections.
+You may omit IP question if you want to add server nodes later.
 
 ## Set up master node
 
@@ -24,20 +24,29 @@ source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstr
 
 Answer the questions and wait for command to be finished.
 
-### Accessing `server` nodes through the load balancer
+Then, if you skipped IP question when setting up a load balancer, you should [update the load balancer nginx config](#add-server-node-to-load-balancer) to include a new server node.
 
-You need to set `tls-san` option in your rke2 config.
+## Set up additional server nodes
 
-1. Create config if not exists - `touch /etc/rancher/rke2/config.yaml`
+> **Note**
+> You **should** have an odd amount of server nodes (1, 3, 5, etc)
 
-2. Edit it - `nano /etc/rancher/rke2/config.yaml`:
+Execute command under the `root` user:
 
-   ```yml
-   tls-san:
-     - your.domain.com
-   ```
+```sh
+source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/server.sh)
+```
 
-3. Restart rke2-server - `systemctl restart rke2-server`
+Answer the questions. The shared token can be taken from master node's `/var/lib/rancher/rke2/server/node-token` file.
+
+Wait for command to be finished.
+
+Then, [update the load balancer nginx config](#add-server-node-to-load-balancer) to include a new server node.
+
+## Add server node to load balancer
+
+- You may specify IP list on initial load balancer set up
+- To add server node manually, navigate to `/etc/nginx/nginx.conf` and add new `server` lines in all sections
 
 ## Set up agent node
 

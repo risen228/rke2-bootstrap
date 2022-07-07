@@ -20,14 +20,15 @@ sed -i "s/$CURRENT_HOSTNAME/$HOSTNAME/g" /etc/hosts
 ## setup rke2 ##
 ################
 
-curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -
-systemctl enable rke2-agent.service
+curl -sfL https://get.rke2.io | sh -
+systemctl enable rke2-server.service
 
-mkdir -p /etc/rancher/rke2/
-
+# allow safe connections through load balancer
 tee -a /etc/rancher/rke2/config.yaml << END
 server: https://$LOAD_BALANCER_HOSTNAME:9345
 token: $TOKEN
+tls-san:
+  - $LOAD_BALANCER_HOSTNAME
 END
 
-systemctl start rke2-agent.service
+systemctl start rke2-server.service

@@ -34,6 +34,9 @@ function write_upstream {
   tee -a /etc/nginx/nginx.conf << END
     upstream $1 {
         least_conn;
+
+        # to add the new server, use the following format:
+        # server <ip>:$2 max_fails=3 fail_timeout=5s;
 END
 
   for ip in "${IP_ARRAY[@]}"

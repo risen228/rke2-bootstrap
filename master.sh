@@ -23,6 +23,13 @@ sed -i "s/$CURRENT_HOSTNAME/$HOSTNAME/g" /etc/hosts
 
 curl -sfL https://get.rke2.io | sh -
 systemctl enable rke2-server.service
+
+# allow safe connections through load balancer
+tee -a /etc/rancher/rke2/config.yaml << END
+tls-san:
+  - $LOAD_BALANCER_HOSTNAME
+END
+
 systemctl start rke2-server.service
 
 ########################
