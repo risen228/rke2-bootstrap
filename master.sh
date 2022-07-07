@@ -51,6 +51,7 @@ while ! test -f "/etc/rancher/rke2/rke2.yaml"; do
 done
 
 # create rke2/rke2.yaml -> ~/.kube/config symlink to access cluster using kubectl
+mkdir ~/.kube
 ln -f /etc/rancher/rke2/rke2.yaml ~/.kube/config
 
 ##################
