@@ -79,6 +79,9 @@ helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --version v1.7.1
 
+echo "Waiting 60s for cert-manager to setup"
+sleep 60
+
 helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
   --set hostname=$LOAD_BALANCER_HOSTNAME \
