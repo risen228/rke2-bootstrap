@@ -29,15 +29,14 @@ systemctl start rke2-server.service
 ## add load balancer support ##
 ###############################
 
-while ! test -f "/etc/rancher/rke2/config.yaml"; do
-  echo "Waiting for rke2/config.yaml to be created.."
-  sleep 3
-done
+touch /etc/rancher/rke2/config.yaml
 
 tee -a /etc/rancher/rke2/config.yaml << END
 tls-san:
   - $LOAD_BALANCER_HOSTNAME
 END
+
+systemctl restart rke2-server.service
 
 ########################
 ## install kubernetes ##
@@ -48,7 +47,7 @@ install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 while ! test -f "/etc/rancher/rke2/rke2.yaml"; do
   echo "Waiting for rke2/rke2.yaml to be created.."
-  sleep 3
+  sleep 5
 done
 
 # create rke2/rke2.yaml -> ~/.kube/config symlink to access cluster using kubectl
