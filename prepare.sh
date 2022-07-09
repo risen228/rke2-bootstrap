@@ -17,7 +17,17 @@ sed -i -e 's/pool 0.ubuntu.pool.ntp.org iburst/server 0.europe.pool.ntp.org/g' /
 sed -i -e 's/pool 1.ubuntu.pool.ntp.org iburst/server 1.europe.pool.ntp.org/g' /etc/ntp.conf
 sed -i -e 's/pool 2.ubuntu.pool.ntp.org iburst/server 2.europe.pool.ntp.org/g' /etc/ntp.conf
 sed -i -e 's/pool 3.ubuntu.pool.ntp.org iburst/server 3.europe.pool.ntp.org/g' /etc/ntp.conf
+
+systemctl enable ntp
 systemctl restart ntp
+
+######################################
+## set up open-iscsi (for longhorn) ##
+######################################
+
+apt-get install -y open-iscsi
+systemctl enable iscsid
+systemctl start iscsid
 
 ##########
 ## misc ##
