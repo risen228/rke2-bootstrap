@@ -52,7 +52,7 @@ line ""
 line "stream {"
 
 function write_upstream {
-  line "    upstream $1"
+  line "    upstream $1 {"
   line "      least_conn;"
   line ""
   line "      # to add a new server, use the following format:"
