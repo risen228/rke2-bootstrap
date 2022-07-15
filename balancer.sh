@@ -30,7 +30,7 @@ apt-get install -y nginx=1.15.*
 ##################
 
 function line {
-  echo $1 >> /etc/nginx/nginx.conf
+  echo "$1" >> /etc/nginx/nginx.conf
 }
 
 # clear nginx.conf
