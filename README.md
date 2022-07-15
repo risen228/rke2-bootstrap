@@ -1,6 +1,6 @@
 # RKE2 bootstrap
 
-Script toolbox for Rancher installation on Ubuntu 18.04
+Script toolbox for RKE2 cluster installation on Ubuntu 18.04
 
 ## Set up load balancer
 
