@@ -1,11 +1,6 @@
 #!/bin/bash
 
 apt-get update
-
-apt-mark hold grub-pc
-apt-get -y upgrade
-apt-mark unhold grub-pc
-
 apt-get install -y gnupg curl software-properties-common
 
 ################

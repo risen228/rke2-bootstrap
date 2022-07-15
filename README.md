@@ -1,4 +1,4 @@
-# Rancher bootstrap
+# RKE2 bootstrap
 
 Script toolbox for Rancher installation on Ubuntu 18.04
 
@@ -7,7 +7,7 @@ Script toolbox for Rancher installation on Ubuntu 18.04
 Execute command under the `root` user:
 
 ```sh
-source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/balancer.sh)
+source <(wget -qO- https://raw.githubusercontent.com/risenforces/rke2-bootstrap/main/balancer.sh)
 ```
 
 Answer the questions and wait for command to be finished.
@@ -19,7 +19,7 @@ You may omit IP question if you want to add server nodes later.
 Execute command under the `root` user:
 
 ```sh
-source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/master.sh)
+source <(wget -qO- https://raw.githubusercontent.com/risenforces/rke2-bootstrap/main/master.sh)
 ```
 
 Answer the questions and wait for command to be finished.
@@ -34,7 +34,7 @@ Then, if you skipped IP question when setting up a load balancer, you should [up
 Execute command under the `root` user:
 
 ```sh
-source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/server.sh)
+source <(wget -qO- https://raw.githubusercontent.com/risenforces/rke2-bootstrap/main/server.sh)
 ```
 
 Answer the questions. The shared token can be taken from master node's `/var/lib/rancher/rke2/server/node-token` file.
@@ -53,7 +53,7 @@ Then, [update the load balancer nginx config](#add-server-node-to-load-balancer)
 Execute command under the `root` user:
 
 ```sh
-source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/agent.sh)
+source <(wget -qO- https://raw.githubusercontent.com/risenforces/rke2-bootstrap/main/agent.sh)
 ```
 
 Answer the questions. The master token can be taken from master node's `/var/lib/rancher/rke2/server/node-token` file.

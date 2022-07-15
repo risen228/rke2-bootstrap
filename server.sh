@@ -4,10 +4,10 @@ CURRENT_HOSTNAME=$(hostname)
 read -p "Enter unique hostname [$CURRENT_HOSTNAME]: " HOSTNAME
 export HOSTNAME=${HOSTNAME:-$CURRENT_HOSTNAME}
 
-read -p "Enter load balancer hostname (domain): " LOAD_BALANCER_HOSTNAME
+read -p "Enter load balancer hostname: " LOAD_BALANCER_HOSTNAME
 read -p "Enter shared token: " TOKEN
 
-source <(wget -qO- https://raw.githubusercontent.com/risenforces/rancher-bootstrap/main/prepare.sh)
+source <(wget -qO- https://raw.githubusercontent.com/risenforces/rke2-bootstrap/main/prepare.sh)
 
 ##################
 ## set hostname ##
@@ -21,7 +21,8 @@ sed -i "s/$CURRENT_HOSTNAME/$HOSTNAME/g" /etc/hosts
 ################
 
 curl -sfL https://get.rke2.io | sh -
-systemctl enable rke2-server.service
+
+mkdir -p /etc/rancher/rke2
 
 # allow safe connections through load balancer
 tee -a /etc/rancher/rke2/config.yaml << END
@@ -31,4 +32,5 @@ tls-san:
   - $LOAD_BALANCER_HOSTNAME
 END
 
+systemctl enable rke2-server.service
 systemctl start rke2-server.service
