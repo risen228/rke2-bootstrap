@@ -51,7 +51,7 @@ line "}"
 line ""
 line "stream {"
 
-function write_upstream {
+function upstream {
   line "    upstream $1 {"
   line "      least_conn;"
   line ""
@@ -70,13 +70,13 @@ function write_upstream {
   line "    }"
 }
 
-write_upstream "http" 80
+upstream "http" 80
 line ""
-write_upstream "https" 443
+upstream "https" 443
 line ""
-write_upstream "rke2_register" 9345
+upstream "k8s_api" 6443
 line ""
-write_upstream "k8s_api" 6443
+upstream "rke2_register" 9345
 
 line "}"
 
